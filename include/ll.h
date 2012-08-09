@@ -270,16 +270,24 @@ static inline void list_move_tail(struct list_head *entry,
 static inline void list_swap(struct list_head *n1, struct list_head *n2)
 {
 	struct list_head tmp;
+
+	/* First insert tmp into n1 */
 	tmp.next = n1->next;
 	tmp.prev = n1->prev;
+	tmp.prev->next = &tmp;
+	tmp.next->prev = &tmp;
+
+	/* Now insert n1 into n2 */
 	n1->next = n2->next;
 	n1->prev = n2->prev;
+	n1->prev->next = n1;
+	n1->next->prev = n1;
+
+	/* Now insert n2 into tmp */
 	n2->next = tmp.next;
 	n2->prev = tmp.prev;
-	n1->next->prev = n1;
-	n1->prev->next = n1;
-	n2->next->prev = n2;
 	n2->prev->next = n2;
+	n2->next->prev = n2;
 }
 
 
@@ -297,7 +305,7 @@ static inline void __list_cut_position(struct list_head *list,
 	new_first->prev = head;
 }
 
-/* list_cut_position - Moves the initial part of @head to, up to an including
+/* list_cut_position - Moves the initial part of @head to, up to and including
  * 			@entry, from @head to @list.
  * list		a new list to add all the removed entries
  * head		a list with entries
