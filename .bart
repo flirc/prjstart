@@ -1,0 +1,36 @@
+bart_get_tag () {
+	LASTTAG=$(git describe --tags --abbrev=0 2>/dev/null)
+	if [ -z "$LASTTAG" ]; then
+		LASTTAG=0.0d0
+	fi
+	TAGPREFIX=$(echo $LASTTAG | sed -e 's/\(.*[^0-9]\)[0-9]*/\1/g')
+	TAGSUFFIX=$(echo $LASTTAG | sed -e 's/.*[^0-9]//g')
+	TAGSUFFIX=$(($TAGSUFFIX + 1))
+	echo ${TAGPREFIX}${TAGSUFFIX}
+}
+
+bart_pre_build () {
+	return 0
+}
+
+bart_build () {
+	make all
+}
+
+bart_post_build () {
+	return 0
+}
+
+bart_package () {
+	VER=$(git describe --tags --always)
+	ARCHIVE=prjstart-${VER}.tgz
+	RESULTS=$(find buildresults -type f \( -name 'cocoa' -o -name 'vanilla' \))
+	tar cvzf $ARCHIVE $RESULTS
+	echo $ARCHIVE
+}
+
+bart_release () {
+	return 0
+}
+
+# vim:filetype=sh
