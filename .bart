@@ -22,10 +22,13 @@ bart_post_build () {
 }
 
 bart_package () {
+	# The packaging for prjstart is all the source. This probably isn't what
+	# you want for normal projects
 	VER=$(git describe --tags --always)
-	ARCHIVE=prjstart-${VER}.tgz
-	RESULTS=$(find buildresults -type f \( -name 'cocoa' -o -name 'vanilla' \))
-	tar cvzf $ARCHIVE $RESULTS
+	ARCHIVEROOT=prjstart-${VER}
+	ARCHIVE=${ARCHIVEROOT}.tgz
+	git archive --prefix=${ARCHIVEROOT}/ --format=tar HEAD | \
+		gzip > "${ARCHIVE}"
 	echo $ARCHIVE
 }
 
