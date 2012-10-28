@@ -6,7 +6,7 @@ bart_get_tag () {
 	TAGPREFIX=$(echo $LASTTAG | sed -e 's/\(.*[^0-9]\)[0-9]*/\1/g')
 	TAGSUFFIX=$(echo $LASTTAG | sed -e 's/.*[^0-9]//g')
 	TAGSUFFIX=$(($TAGSUFFIX + 1))
-	echo ${TAGPREFIX}${TAGSUFFIX}
+	TAG=${TAGPREFIX}${TAGSUFFIX}
 }
 
 bart_pre_build () {
@@ -26,10 +26,9 @@ bart_package () {
 	# you want for normal projects
 	VER=$(git describe --tags --always)
 	ARCHIVEROOT=prjstart-${VER}
-	ARCHIVE=${ARCHIVEROOT}.tgz
+	PACKAGE=${ARCHIVEROOT}.tgz
 	git archive --prefix=${ARCHIVEROOT}/ --format=tar HEAD | \
-		gzip > "${ARCHIVE}"
-	echo $ARCHIVE
+		gzip > "${PACKAGE}"
 }
 
 bart_release () {
