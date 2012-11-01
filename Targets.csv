@@ -1,0 +1,11 @@
+# Target, Dependencies, Command
+
+vanilla.debug,,         $(MAKE) -f target.mk TARGETMK=$(ROOTPWD)/targets/vanilla.mk CONFIG=debug
+vanilla.release,,       $(MAKE) -f target.mk TARGETMK=$(ROOTPWD)/targets/vanilla.mk CONFIG=release
+vanilla,                vanilla.debug vanilla.release,
+
+cocoa.debug,,           $(MAKE) -f target.mk TARGETMK=$(ROOTPWD)/targets/cocoa.mk CONFIG=debug
+cocoa.release,,         $(MAKE) -f target.mk TARGETMK=$(ROOTPWD)/targets/cocoa.mk CONFIG=release
+cocoa,                  cocoa.debug cocoa.release,
+
+all,                    vanilla cocoa
