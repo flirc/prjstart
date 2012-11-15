@@ -8,8 +8,13 @@ ASFLAGS :=
 LDFLAGS :=
 OPTIONS :=
 ANALYZE_FLAGS :=	-analyzer-viz-egraph-graphviz \
+			-analyzer-output=html \
 			-analyzer-opt-analyze-headers \
-			-analyzer-output=html
+			-analyzer-checker=core \
+			-analyzer-checker=unix \
+			-analyzer-checker=alpha.unix \
+			-analyzer-checker=security \
+			-analyzer-checker=alpha.security \
 
 ifeq ($(TARGET),)
 $(error no TARGET defined)
