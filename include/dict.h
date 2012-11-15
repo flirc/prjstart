@@ -315,7 +315,7 @@ static inline char *dict_add_string(struct dictionary *dict, const char *key,
  */
 static inline char *dict_str_for_key(struct dictionary *dict, const char *key)
 {
-	size_t sz;
+	size_t sz = 0;
 	char *ret = dict_value_for_key(dict, key, &sz);
 	return sz ? ret : NULL;
 }

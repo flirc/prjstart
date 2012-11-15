@@ -9,7 +9,6 @@ LDFLAGS :=
 OPTIONS :=
 ANALYZE_FLAGS :=	-analyzer-viz-egraph-graphviz \
 			-analyzer-opt-analyze-headers \
-			-analyzer-inline-call \
 			-analyzer-output=html
 
 ifeq ($(TARGET),)
